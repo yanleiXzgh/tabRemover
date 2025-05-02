@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "标签页名修改",
   "description": "修改当前标签页的名称",
-  "version": "1.0",
+  "version": "2.0",
   "action": {
     "default_popup": "popup/popup.html"
   },
@@ -10,7 +10,7 @@
     "matches": ["*://*/*"],
     "js": ["content-scripts/content-script.js"]
   }],
-  "permissions": ["activeTab", "scripting", "tabs"],
+  "permissions": ["activeTab", "scripting", "tabs","storage"],
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",

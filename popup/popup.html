@@ -2,40 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <script src="popup.js"></script>
 </head>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-    height: 50px;
-    width: 100px;
-    background-color: #0e0e0e;
-    border-radius: 10px;
-  }
-  #inputText {
-    width: 80%;
-    padding: 10px;
-    margin: 10px auto; 
-    border-radius: 10px;
-    background-color: #b3dcff;
-  }
-  #sendBtn {
-    padding: 10px 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-  }
-</style>
 <body>
-  <input type="text" id="inputText" placeholder="请输入新名称">
-  <button id="sendBtn">修改名称</button> 
+  <!-- 导航栏 -->
+  <div class="navTabs">
+    <button class="tab active" data-page="mainPage">主页</button>
+    <button class="tab" data-page="newRegex">新建正则表达式</button>
+  </div>
+  <!-- 主页 -->
+  <div class="page active" id="mainPage">
+    <h2 style="color: rgb(255, 255, 255);">在此修改名称</h2>
+    <input type="text" id="inputText" class="inputText" placeholder="请输入新名称">
+    <button id="sendBtn" class="sendBtn">修改名称</button> 
+    <button id="quickRenameBtn" class="sendBtn">快速修改</button>
+  </div>
+  <!-- 新建正则表达式 -->
+  <div class="page" id="newRegex">
+    <h2 style="color: rgb(255, 255, 255);">新建正则表达式</h2>
+    <input type="text" id="name" class="inputText" placeholder="请输入替换名称">
+    <input type="text" id="url" class="inputText" placeholder="请输入网址">
+    <button id="addRegexBtn" class="sendBtn">添加正则表达式</button>
+  </div>
+  
 </body>
 </html>

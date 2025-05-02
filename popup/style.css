@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    height: 50px;
+    width: 200px;
+    background-color: #0e0e0e;
+    border-radius: 10px;
+  }
+  .inputText {
+    width: 80%;
+    padding: 10px;
+    margin: 10px auto; 
+    border-radius: 10px;
+    background-color: #b3dcff;
+  }
+  .sendBtn {
+    padding: 10px 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  /* 页面 */
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  /* 导航栏 */
+  .navTabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #2c2c2c;
+  }
+  .tab {
+    flex: 1;
+    padding: 8px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .tab.active{
+    opacity: 1;
+    border-bottom: 2px solid #007bff;
+  }
