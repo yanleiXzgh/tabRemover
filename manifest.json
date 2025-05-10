@@ -10,7 +10,11 @@
     "matches": ["*://*/*"],
     "js": ["content-scripts/content-script.js"]
   }],
-  "permissions": ["activeTab", "scripting", "tabs","storage"],
+  "permissions": ["activeTab", 
+                  "scripting", 
+                  "tabs",
+                  "storage",
+                  "https://www.tongyi.com/"],
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
