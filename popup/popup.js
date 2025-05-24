@@ -40,6 +40,12 @@ function storeRegexClick(event) {
 }
 
 /**
+ * 删除正则表达式
+ */
+function deleteRegexClick(event) {
+
+}
+/**
  * 应用正则表达式规则到当前标签页
  * @param {Event} event - 事件对象
  */
@@ -96,12 +102,12 @@ function tabChange() {
  * 在 DOM 加载完成后绑定事件
  */
 document.addEventListener('DOMContentLoaded', () => {
+  tabChange(); // 初始化标签页切换功能
+  document.getElementById("addRegexBtn").addEventListener("click", storeRegexClick); // 绑定存储规则按钮事件
+  document.getElementById("quickRenameBtn").addEventListener("click", applyRegexClick); // 绑定快速重命名按钮事件
+  // document.getElementById("deleteRegexBtn").addEventListener("click", deleteRegexClick); // 绑定删除规则按钮事件
   document.getElementById('sendBtn').addEventListener('click', () => {
     const inputText = document.getElementById('inputText').value; // 获取输入框的值
     handleNameChange(null, inputText); // 修改标签页名称
   });
-  tabChange(); // 初始化标签页切换功能
-  document.getElementById("addRegexBtn").addEventListener("click", storeRegexClick); // 绑定存储规则按钮事件
-  document.getElementById("quickRenameBtn").addEventListener("click", applyRegexClick); // 绑定快速重命名按钮事件
-  document.getElementById("deleteRegexBtn").addEventListener("click", deleteRegexClick); // 绑定删除规则按钮事件
 });

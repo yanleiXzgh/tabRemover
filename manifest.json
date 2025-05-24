@@ -13,8 +13,8 @@
   "permissions": ["activeTab", 
                   "scripting", 
                   "tabs",
-                  "storage",
-                  "https://www.tongyi.com/"],
+                  "storage"
+                 ],
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
