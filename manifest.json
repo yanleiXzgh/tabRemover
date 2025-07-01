@@ -1,8 +1,8 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 3,
   "name": "标签页名修改",
   "description": "修改当前标签页的名称",
-  "version": "1.0",
+  "version": "3.0",
   "action": {
     "default_popup": "popup/popup.html"
   },

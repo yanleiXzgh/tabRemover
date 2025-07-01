@@ -5,9 +5,7 @@
  */
 function handleNameChange(event, newName) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => { // 获取当前活动标签页
-        chrome.tabs.sendMessage(tabs[0].id, {
-            message: newName,
-        }, (response) => {
+        chrome.tabs.sendMessage(tabs[0].id, {message: newName,}, (response) => {
             if (chrome.runtime.lastError) {
                 console.log(`failed sending message: ${chrome.runtime.lastError?.message || '未知错误'}`);
                 return;
