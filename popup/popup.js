@@ -39,7 +39,15 @@ function storeRegexClick(event) {
  * 删除正则表达式
  */
 function deleteRegexClick(event) {
+    //按id删除表达式
+    const idToRemove = a;
+    chrome.storage.local.get(['regexList'], (result) => {
+        newRules = newRules.filter(rule => rule.id !== idToRemove);
+        chrome.storage.local.set({ rules }, () => {
+            console.log(`Rule with ID "${idToRemove}" has been removed.`);
+        });
 
+    });
 }
 /**
  * 应用正则表达式规则到当前标签页
