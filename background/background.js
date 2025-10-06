@@ -1,5 +1,7 @@
 console.log('background script loaded');
 
+import {aiSummary} from './aiSummary.js';
+
 function autoRename() {
 
     //chrome.storage.local.get([key], (result) => {
@@ -57,26 +59,47 @@ function autoRename() {
     });
 }
 
-// function intelligentSummary(param, input) {
-//     chrome.storage.label.get(['autoRename'], (result) => {
-//         if (chrome.runtime.lastError) {
-//             console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
-//             return;
-//         }
-//         if (result.isISOpen) {
-//             chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-//                 if (!tabs[0] || !tabs[0].id) {
-//                     console.warn("当前没有活动标签页");
-//                     return;
-//                 }
-//
-//                 const tabId = tabs[0].id;
-//                 //TODO:fulfill the functions
-//             })
-//         }
-//
-//     });
-// }
+function intelligentSummary(param, input) {
+    chrome.storage.label.get(['ifIntelligentSummary'], (result) => {
+        if (chrome.runtime.lastError) {
+            console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
+            return;
+        }
+        if (result.ifIntelligentSummary) {
+            chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
+                if (!tabs[0] || !tabs[0].id) {
+                    console.warn("当前没有活动标签页");
+                    return;
+                }
+                //TODO:fulfill the functions
+                try {
+                    const summaryText = await aiSummary(urlObj.href);
+                    console.log('总结:', summaryText);
+                    // 在这里可以继续处理 summaryText
+
+                    if (summaryText) {
+                        // 应用匹配规则
+                        chrome.tabs.sendMessage(tabs[0].id, {message: urlObj.hostname + summaryText,}, (response) => {
+                            if (chrome.runtime.lastError) {
+                                console.log(`failed sending message: ${chrome.runtime.lastError?.message || '未知错误'}`);
+                                return;
+                            }
+                            console.log('accepted response:', response?.status);
+                        });
+                        console.log(`已AI智能总结：${summaryText}`);
+                    } else {
+                        chrome.notifications.alert('AI智能总结出错');
+                    }
+
+                } catch (error) {
+                    console.error('生成摘要时发生错误:', error);
+                }
+
+            });
+        }
+
+    });
+}
 
 // 添加标签页更新事件监听
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {

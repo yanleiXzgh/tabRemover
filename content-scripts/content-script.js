@@ -7,8 +7,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({status: 'accepted'});
     return true;
 });
-/**AI爬虫
+/**
+ * AI爬虫
 */
-function aiCrawler() {
-    
-}
+//TODO:AI爬虫

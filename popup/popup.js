@@ -105,7 +105,7 @@ function tabChange() {
 // /**
 //  * 开关设置
 //  */
-// //TODO:unworked
+//
 // function buttonSettings(switchElement, key) {
 //     switchElement.addEventListener('change', (event) => {
 //     const isChecked = event.target.checked;
