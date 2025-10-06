@@ -1,13 +1,26 @@
 console.log('background script loaded');
 
 function autoRename() {
-    chrome.storage.local.get(['autoRename'], (result) => {
+
+    //chrome.storage.local.get([key], (result) => {
+    //         if (chrome.runtime.lastError) {
+    //             console.error(`获取 ${key} 状态失败: ${chrome.runtime.lastError.message}`);
+    //             return;
+    //         }
+    //
+    //         // 设置初始状态（如果存储中没有值，默认为false）
+    //         const initialState = result[key] || false;
+    //         switchElement.checked = initialState;
+    //         console.log(`${key} 初始状态: ${initialState ? '开启' : '关闭'}`);
+    //     });
+    chrome.storage.local.get(['ifAutoRename'], (result) => {
         if (chrome.runtime.lastError) {
             console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
             return;
         }
 
-        if (result.autoRename) {
+        if (result.ifAutoRename) {
+            console.log("自动改名已开启！")
             chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                 if (!tabs[0] || !tabs[0].id) {
                     console.warn("当前没有活动标签页");
@@ -36,7 +49,7 @@ function autoRename() {
                         });
                         console.log(`已应用正则表达式：${matchedRule.replaceName}`);
                     } else {
-                        window.alert('未找到匹配的正则表达式');
+                        chrome.notifications.alert('未找到匹配的正则表达式');
                     }
                 });
             });
@@ -44,9 +57,31 @@ function autoRename() {
     });
 }
 
+// function intelligentSummary(param, input) {
+//     chrome.storage.label.get(['autoRename'], (result) => {
+//         if (chrome.runtime.lastError) {
+//             console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
+//             return;
+//         }
+//         if (result.isISOpen) {
+//             chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+//                 if (!tabs[0] || !tabs[0].id) {
+//                     console.warn("当前没有活动标签页");
+//                     return;
+//                 }
+//
+//                 const tabId = tabs[0].id;
+//                 //TODO:fulfill the functions
+//             })
+//         }
+//
+//     });
+// }
+
 // 添加标签页更新事件监听
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === 'complete' && tab.active) {
         autoRename();
     }
 });
+

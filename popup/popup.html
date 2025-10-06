@@ -10,7 +10,8 @@
   <!-- 导航栏 -->
   <div class="navTabs">
     <button class="tab active" data-page="mainPage">主页</button>
-    <button class="tab" data-page="newRegex">新建正则表达式</button>
+    <button class="tab" data-page="newRegex">正则表达式</button>
+    <button class="tab" data-page="intelligentSummary">智能总结</button>
   </div>
   <!-- 主页 -->
   <div class="page active" id="mainPage">
@@ -21,11 +22,11 @@
   <!--自动改名-->
     <h3 style="color: aliceblue">开启自动改名</h3>
     <label class="switch">
-      <input type="checkbox">
+      <input type="checkbox" data-key="ifAutoRename">
       <span class="slider round"></span>
     </label>
   </div>
-  <!-- 新建正则表达式 -->
+  <!-- 正则表达式 -->
   <div class="page" id="newRegex">
     <h2 style="color: rgb(255, 255, 255);">新建正则表达式</h2>
     <input type="text" id="name" class="inputText" placeholder="请输入替换名称">
@@ -40,6 +41,13 @@
       <tr id="firstTr-folded"></tr>
     </table>
   </div>
-  
+
+  <div class="page" id="intelligentSummary">
+    <h2 style="color: rgb(255, 255, 255);">智能总结</h2>
+    <label class="switch">
+      <input type="checkbox" data-key="ifIntelligentSummary">
+      <span class="slider round"></span>
+    </label>
+  </div>
 </body>
 </html>

@@ -102,37 +102,103 @@ function tabChange() {
 }
 
 
-/**
- * 自动改名
- */
-function ifAutoRename() {
-    const switchElement = document.querySelector('.switch input[type="checkbox"]');
-    if (!switchElement) {
-        console.error('未找到开关元素');
-        return;
-    }
-    switchElement.addEventListener('change', (event) => {
-        const isChecked = event.target.checked;
-        chrome.storage.local.set({ autoRename: isChecked }, () => {
-            if (chrome.runtime.lastError) {
-                console.error(`设置自动改名失败: ${chrome.runtime.lastError.message}`);
-                return;
-            }
-            console.log(`自动改名功能已${isChecked ? '开启' : '关闭'}`);
-        });
-    });
+// /**
+//  * 开关设置
+//  */
+// //TODO:unworked
+// function buttonSettings(switchElement, key) {
+//     switchElement.addEventListener('change', (event) => {
+//     const isChecked = event.target.checked;
+//     chrome.storage.local.set({[key] : isChecked}, () => {
+//         if (chrome.runtime.lastError) {
+//             console.error(`设置 ${key} 失败: ${chrome.runtime.lastError.message}`);
+//             // return;
+//         }
+//         console.log(`${key} 功能已${isChecked ? '开启' : '关闭'}`);
+//     });
+//     chrome.storage.local.get([key],(result) => {
+//         if (chrome.runtime.lastError) {
+//             console.error(`获取 ${key} 状态失败: ${chrome.runtime.lastError.message}`);
+//             // return;
+//         }
+//         switchElement.checked = result[key] || false;
+//
+//     });
+//     });
+// }
+//
+// // function ifAutoRename() {
+// //     const switchElement = document.querySelector('.switch input[type="checkbox"]');
+// //     if (!switchElement) {
+// //         console.error('未找到开关元素');
+// //         return;
+// //     }
+// //     switchElement.addEventListener('change', (event) => {
+// //         const isChecked = event.target.checked;
+// //         chrome.storage.local.set({ autoRename: isChecked }, () => {
+// //             if (chrome.runtime.lastError) {
+// //                 console.error(`设置自动改名失败: ${chrome.runtime.lastError.message}`);
+// //                 return;
+// //             }
+// //             console.log(`自动改名功能已${isChecked ? '开启' : '关闭'}`);
+// //         });
+// //     });
+// //
+// //     chrome.storage.local.get(['autoRename'], (result) => {
+// //         if (chrome.runtime.lastError) {
+// //             console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
+// //             return;
+// //         }
+// //         if (result.autoRename) {
+// //             console.log('自动改名功能已开启');
+// //             switchElement.checked = true; // 设置开关状态为开启
+// //         } else {
+// //             switchElement.checked = false; // 设置开关状态为关闭
+// //         }
+// //     });
+// // }
+// const ifAutoRename = document.querySelector('.switch input[data-key="ifAutoRename"]');
+// if (ifAutoRename) {
+//     buttonSettings(ifAutoRename,'ifAutoRename');
+// }
+// const ifIntelligentSummary = document.querySelector('.switch input[data-key="ifIntelligentSummary"]');
+// if (ifIntelligentSummary) {
+//     buttonSettings(ifIntelligentSummary,'ifIntelligentSummary');
+// }
 
-    chrome.storage.local.get(['autoRename'], (result) => {
+/**
+ * 初始化并管理开关设置
+ * @param {HTMLElement} switchElement - 开关元素
+ * @param {string} key - 存储在chrome.storage中的键名
+ */
+function initSwitchSetting(switchElement, key) {
+    // 1. 从存储加载初始状态
+    chrome.storage.local.get([key], (result) => {
         if (chrome.runtime.lastError) {
-            console.error(`获取自动改名状态失败: ${chrome.runtime.lastError.message}`);
+            console.error(`获取 ${key} 状态失败: ${chrome.runtime.lastError.message}`);
             return;
         }
-        if (result.autoRename) {
-            console.log('自动改名功能已开启');
-            switchElement.checked = true; // 设置开关状态为开启
-        } else {
-            switchElement.checked = false; // 设置开关状态为关闭
-        }
+
+        // 设置初始状态（如果存储中没有值，默认为false）
+        const initialState = result[key] || false;
+        switchElement.checked = initialState;
+        console.log(`${key} 初始状态: ${initialState ? '开启' : '关闭'}`);
+    });
+
+    // 2. 添加变更事件监听器
+    switchElement.addEventListener('change', (event) => {
+        const isChecked = event.target.checked;
+
+        // 保存新状态到存储
+        chrome.storage.local.set({[key]: isChecked}, () => {
+            if (chrome.runtime.lastError) {
+                console.error(`设置 ${key} 失败: ${chrome.runtime.lastError.message}`);
+                // 恢复之前的状态（可选）
+                event.target.checked = !isChecked;
+                return;
+            }
+            console.log(`${key} 功能已${isChecked ? '开启' : '关闭'}`);
+        });
     });
 }
 
@@ -145,7 +211,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("addRegexBtn").addEventListener("click", storeRegexClick); // 绑定存储规则按钮事件
     document.getElementById("quickRenameBtn").addEventListener("click", applyRegexClick); // 绑定快速重命名按钮事件
     // document.getElementById("deleteRegexBtn").addEventListener("click", deleteRegexClick); // 绑定删除规则按钮事件
-    ifAutoRename();
+    // ifAutoRename();
+    const autoRenameSwitch = document.querySelector('.switch input[data-key="ifAutoRename"]');
+    if (autoRenameSwitch) {
+        initSwitchSetting(autoRenameSwitch, 'ifAutoRename');
+    }
+
+    // 初始化智能摘要开关
+    const intelligentSummarySwitch = document.querySelector('.switch input[data-key="ifIntelligentSummary"]');
+    if (intelligentSummarySwitch) {
+        initSwitchSetting(intelligentSummarySwitch, 'ifIntelligentSummary');
+    }
     document.getElementById('sendBtn').addEventListener('click', () => {
         const inputText = document.getElementById('inputText').value; // 获取输入框的值
         handleNameChange(null, inputText); // 修改标签页名称
