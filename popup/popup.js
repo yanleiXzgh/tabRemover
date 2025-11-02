@@ -5,7 +5,7 @@
  */
 function handleNameChange(event, newName) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => { // 获取当前活动标签页
-        chrome.tabs.sendMessage(tabs[0].id, {message: newName,}, (response) => {
+        chrome.tabs.sendMessage(tabs[0].id, {type:"handleNameChange",message: newName,}, (response) => {
             if (chrome.runtime.lastError) {
                 console.log(`failed sending message: ${chrome.runtime.lastError?.message || '未知错误'}`);
                 return;
@@ -39,15 +39,6 @@ function storeRegexClick(event) {
  * 删除正则表达式
  */
 function deleteRegexClick(event) {
-    //按id删除表达式
-    const idToRemove = a;
-    chrome.storage.local.get(['regexList'], (result) => {
-        newRules = newRules.filter(rule => rule.id !== idToRemove);
-        chrome.storage.local.set({ rules }, () => {
-            console.log(`Rule with ID "${idToRemove}" has been removed.`);
-        });
-
-    });
 }
 /**
  * 应用正则表达式规则到当前标签页
@@ -203,15 +194,15 @@ function initSwitchSetting(switchElement, key) {
 }
 
 /**
- * 初始化事件监听器
- * 在 DOM 加载完成后绑定事件
+ * 初始化
  */
 document.addEventListener('DOMContentLoaded', () => {
     tabChange(); // 初始化标签页切换功能
     document.getElementById("addRegexBtn").addEventListener("click", storeRegexClick); // 绑定存储规则按钮事件
     document.getElementById("quickRenameBtn").addEventListener("click", applyRegexClick); // 绑定快速重命名按钮事件
     // document.getElementById("deleteRegexBtn").addEventListener("click", deleteRegexClick); // 绑定删除规则按钮事件
-    // ifAutoRename();
+
+    // 初始化自动改名开关
     const autoRenameSwitch = document.querySelector('.switch input[data-key="ifAutoRename"]');
     if (autoRenameSwitch) {
         initSwitchSetting(autoRenameSwitch, 'ifAutoRename');
@@ -222,6 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (intelligentSummarySwitch) {
         initSwitchSetting(intelligentSummarySwitch, 'ifIntelligentSummary');
     }
+    // 初始化添加关键词开关
+    const addKeyWordsSwitch = document.querySelector('.switch input[data-key="ifAddKeyWords"]');
+    if (addKeyWordsSwitch) {
+        initSwitchSetting(addKeyWordsSwitch,'ifAddKeyWords');
+    }
+
     document.getElementById('sendBtn').addEventListener('click', () => {
         const inputText = document.getElementById('inputText').value; // 获取输入框的值
         handleNameChange(null, inputText); // 修改标签页名称

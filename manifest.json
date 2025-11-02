@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 3.0,
   "name": "标签页名修改",
   "description": "修改当前标签页的名称",
   "version": "3.0",
@@ -21,6 +21,7 @@
     "tabs",
     "storage"
   ],
+  "host_permissions": ["*://*/*"],
   "icons":
     {
       "16": "images/icon16.png",
