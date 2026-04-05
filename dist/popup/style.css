@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    height: 50px;
+    width: 200px;
+    background-color: #0e0e0e;
+    border-radius: 10px;
+  }
+  /*输入框*/
+  .inputText {
+    width: 80%;
+    padding: 10px;
+    margin: 10px auto; 
+    border-radius: 10px;
+    background-color: #b3dcff;
+  }
+  /*发送按钮*/
+  .sendBtn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px auto 20px;
+    border-radius: 10px;
+  }
+  /* 页面 */
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  /* 导航栏 */
+  .navTabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #2c2c2c;
+  }
+  .tab {
+    flex: 1;
+    padding: 8px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .tab.active{
+    opacity: 1;
+    border-bottom: 2px solid #007bff;
+  }
+    /* 切换按钮 */
+  .switch {
+    color: white;
+    position: relative;
+    bottom: 10px;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+  }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
+    input:checked + .slider {
+        background-color: #2196F3 ;
+    }
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+    .slider.round {
+        border-radius: 34px;
+    }
+    .slider.round:before {
+        border-radius: 50%;
+    }
